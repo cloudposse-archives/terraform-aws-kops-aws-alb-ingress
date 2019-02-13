@@ -32,6 +32,11 @@ variable "tags" {
   description = "Additional tags (e.g. map(`Cluster`,`us-east-1.cloudposse.com`)"
 }
 
+variable "enabled" {
+  description = "Set to false to prevent the module from creating any resources"
+  default     = "true"
+}
+
 variable "cluster_name" {
   type        = "string"
   description = "Kops cluster name (e.g. `us-east-1.cloudposse.com` or `cluster-1.cloudposse.com`)"

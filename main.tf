@@ -16,6 +16,7 @@ module "kops_metadata" {
 }
 
 resource "aws_iam_role" "default" {
+  count = "${var.enabled == "true" ? 1 : 0}"
   name        = "${module.label.id}"
   description = "Role that can be assumed by AWS ALB ingress controller"
 
@@ -57,8 +58,9 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "default" {
-  role       = "${aws_iam_role.default.name}"
-  policy_arn = "${aws_iam_policy.default.arn}"
+  count = "${var.enabled == "true" ? 1 : 0}"
+  role       = "${element(aws_iam_role.default.*.name, 0)}"
+  policy_arn = "${element(aws_iam_policy.default.*.arn, 0)}"
 
   lifecycle {
     create_before_destroy = true
@@ -66,6 +68,7 @@ resource "aws_iam_role_policy_attachment" "default" {
 }
 
 resource "aws_iam_policy" "default" {
+  count = "${var.enabled == "true" ? 1 : 0}"
   name        = "${module.label.id}"
   description = "Grant permissions for AWS ALB ingress controller"
   policy      = "${data.aws_iam_policy_document.default.json}"
