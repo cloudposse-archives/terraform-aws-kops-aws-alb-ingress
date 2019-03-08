@@ -6,7 +6,7 @@
 # terraform-aws-kops-alb-ingress [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-kops-alb-ingress.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-kops-alb-ingress) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-kops-alb-ingress.svg)](https://github.com/cloudposse/terraform-aws-kops-alb-ingress/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
-Terraform module to provision an IAM role for `aws-alb-ingress-controller` running in a Kops cluster, and attach an IAM policy to the role with permissions to manage Application Load Balancers.
+Terraform module to provision an IAM role for [`aws-alb-ingress-controller`](https://github.com/kubernetes-sigs/aws-alb-ingress-controller) running in a Kops cluster, and attach an IAM policy to the role with permissions to manage Application Load Balancers.
 
 
 ## Overview
@@ -15,7 +15,7 @@ This module assumes you are running [aws-alb-ingress-controller](https://github.
 
 It will provision an IAM role with the required permissions and grant the Kubernetes servers the permission to assume it.
 
-This is useful to run on Kubernetes Ingress backed with AWS ALB .
+This is useful to run on Kubernetes Ingress backed by AWS ALB.
 
 The module uses [terraform-aws-kops-metadata](https://github.com/cloudposse/terraform-aws-kops-metadata) to lookup resources within a Kops cluster for easier integration with Terraform.
 
@@ -56,10 +56,10 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 ```hcl
 module "kops_alb_ingress" {
   source       = "git::https://github.com/cloudposse/terraform-aws-kops-alb-ingress.git?ref=master"
-  namespace    = "cp"
+  namespace    = "eg"
   stage        = "prod"
   name         = "alb-ingress"
-  cluster_name = "us-east-1.cloudposse.com"
+  cluster_name = "us-east-1.prod.cloudposse.co"
   masters_name = "masters"
   nodes_name   = "nodes"  
 
@@ -89,15 +89,16 @@ Available targets:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
-| cluster_name | Kops cluster name (e.g. `us-east-1.cloudposse.com` or `cluster-1.cloudposse.com`) | string | - | yes |
+| cluster_name | Kops cluster name (e.g. `us-east-1.prod.cloudposse.co` or `cluster-1.cloudposse.co`) | string | - | yes |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | string | `-` | no |
+| enabled | Set to false to prevent the module from creating any resources | string | `true` | no |
 | masters_name | Kops masters subdomain name in the cluster DNS zone | string | `masters` | no |
 | name | Name (e.g. `alb-ingress`) | string | `alb-ingress` | no |
-| namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| namespace | Namespace (e.g. `eg` or `cp`) | string | - | yes |
 | nodes_name | Kops nodes subdomain name in the cluster DNS zone | string | `nodes` | no |
 | permitted_nodes | Kops kubernetes nodes that are permitted to assume roles (e.g. 'nodes', 'masters', 'both' or 'any') | string | `both` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
-| tags | Additional tags (e.g. map(`Cluster`,`us-east-1.cloudposse.com`) | map | `<map>` | no |
+| tags | Additional tags (e.g. map(`Cluster`,`us-east-1.prod.cloudposse.co`) | map | `<map>` | no |
 
 ## Outputs
 
