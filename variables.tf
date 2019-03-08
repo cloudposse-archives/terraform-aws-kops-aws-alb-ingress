@@ -39,7 +39,7 @@ variable "enabled" {
 
 variable "cluster_name" {
   type        = "string"
-  description = "Kops cluster name (e.g. `us-east-1..prod.cloudposse.co` or `cluster-1.cloudposse.co`)"
+  description = "Kops cluster name (e.g. `us-east-1.prod.cloudposse.co` or `cluster-1.cloudposse.co`)"
 }
 
 variable "masters_name" {
