@@ -16,7 +16,7 @@ module "kops_metadata" {
 }
 
 resource "aws_iam_role" "default" {
-  count = "${var.enabled == "true" ? 1 : 0}"
+  count       = "${var.enabled == "true" ? 1 : 0}"
   name        = "${module.label.id}"
   description = "Role that can be assumed by AWS ALB ingress controller"
 
@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "default" {
-  count = "${var.enabled == "true" ? 1 : 0}"
+  count      = "${var.enabled == "true" ? 1 : 0}"
   role       = "${element(aws_iam_role.default.*.name, 0)}"
   policy_arn = "${element(aws_iam_policy.default.*.arn, 0)}"
 
@@ -68,27 +68,26 @@ resource "aws_iam_role_policy_attachment" "default" {
 }
 
 resource "aws_iam_policy" "default" {
-  count = "${var.enabled == "true" ? 1 : 0}"
+  count       = "${var.enabled == "true" ? 1 : 0}"
   name        = "${module.label.id}"
   description = "Grant permissions for AWS ALB ingress controller"
   policy      = "${data.aws_iam_policy_document.default.json}"
 }
 
 data "aws_iam_policy_document" "default" {
-
   statement {
     sid = "GrantReadAWSCertificates"
 
     actions = [
       "acm:DescribeCertificate",
       "acm:ListCertificates",
-      "acm:GetCertificate"
+      "acm:GetCertificate",
     ]
 
     effect = "Allow"
 
     resources = ["*"]
-  },
+  }
 
   statement {
     sid = "GrantEC2Access"
@@ -110,13 +109,13 @@ data "aws_iam_policy_document" "default" {
       "ec2:DescribeVpcs",
       "ec2:ModifyInstanceAttribute",
       "ec2:ModifyNetworkInterfaceAttribute",
-      "ec2:RevokeSecurityGroupIngress"
+      "ec2:RevokeSecurityGroupIngress",
     ]
 
     effect = "Allow"
 
     resources = ["*"]
-  },
+  }
 
   statement {
     sid = "GrantELBAccess"
@@ -152,13 +151,13 @@ data "aws_iam_policy_document" "default" {
       "elasticloadbalancing:SetIpAddressType",
       "elasticloadbalancing:SetSecurityGroups",
       "elasticloadbalancing:SetSubnets",
-      "elasticloadbalancing:SetWebACL"
+      "elasticloadbalancing:SetWebACL",
     ]
 
     effect = "Allow"
 
     resources = ["*"]
-  },
+  }
 
   statement {
     sid = "GrantIAMAccess"
@@ -166,13 +165,13 @@ data "aws_iam_policy_document" "default" {
     actions = [
       "iam:CreateServiceLinkedRole",
       "iam:GetServerCertificate",
-      "iam:ListServerCertificates"
+      "iam:ListServerCertificates",
     ]
 
     effect = "Allow"
 
     resources = ["*"]
-  },
+  }
 
   statement {
     sid = "GrantWAFRegionalAccess"
@@ -181,32 +180,32 @@ data "aws_iam_policy_document" "default" {
       "waf-regional:GetWebACLForResource",
       "waf-regional:GetWebACL",
       "waf-regional:AssociateWebACL",
-      "waf-regional:DisassociateWebACL"
+      "waf-regional:DisassociateWebACL",
     ]
 
     effect = "Allow"
 
     resources = ["*"]
-  },
+  }
 
   statement {
     sid = "GrantWAFAccess"
 
     actions = [
-      "waf:GetWebACL"
+      "waf:GetWebACL",
     ]
 
     effect = "Allow"
 
     resources = ["*"]
-  },
+  }
 
   statement {
     sid = "GrantTagsAccess"
 
     actions = [
       "tag:GetResources",
-      "tag:TagResources"
+      "tag:TagResources",
     ]
 
     effect = "Allow"
