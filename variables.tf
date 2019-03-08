@@ -1,6 +1,6 @@
 variable "namespace" {
   type        = "string"
-  description = "Namespace (e.g. `cp` or `cloudposse`)"
+  description = "Namespace (e.g. `eg` or `cp`)"
 }
 
 variable "stage" {
@@ -29,7 +29,7 @@ variable "attributes" {
 variable "tags" {
   type        = "map"
   default     = {}
-  description = "Additional tags (e.g. map(`Cluster`,`us-east-1.cloudposse.com`)"
+  description = "Additional tags (e.g. map(`Cluster`,`us-east-1.prod.cloudposse.co`)"
 }
 
 variable "enabled" {
@@ -39,7 +39,7 @@ variable "enabled" {
 
 variable "cluster_name" {
   type        = "string"
-  description = "Kops cluster name (e.g. `us-east-1.cloudposse.com` or `cluster-1.cloudposse.com`)"
+  description = "Kops cluster name (e.g. `us-east-1..prod.cloudposse.co` or `cluster-1.cloudposse.co`)"
 }
 
 variable "masters_name" {
