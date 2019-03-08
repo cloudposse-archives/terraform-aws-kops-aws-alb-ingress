@@ -212,18 +212,5 @@ data "aws_iam_policy_document" "default" {
     effect = "Allow"
 
     resources = ["*"]
-  },
-
-  statement {
-    sid = "Operates"
-
-    actions = [
-      "tag:GetResources",
-      "tag:TagResources"
-    ]
-
-    effect = "Allow"
-
-    resources = ["*"]
   }
 }
