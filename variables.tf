@@ -59,3 +59,8 @@ variable "permitted_nodes" {
   default     = "both"
   description = "Kops kubernetes nodes that are permitted to assume roles (e.g. 'nodes', 'masters', 'both' or 'any')"
 }
+
+variable "iam_role_max_session_duration" {
+  default     = 3600
+  description = "The maximum session duration (in seconds) for the role. Can have a value from 1 hour to 12 hours"
+}
